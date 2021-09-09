@@ -20,9 +20,8 @@ int vazia(node pilha){
 
 void push(node *pilha, int id){
     node *novo = (node*) malloc(sizeof(node));
-
     if(novo==NULL){
-        printf("Sem memoria disponivel");
+        printf("Sem memoria disponivel:\n");
     }else{
         novo->id = id;
         novo->prox = NULL;
@@ -56,7 +55,7 @@ int pop(node *pilha){
 void imprimir(node pilha){
 
     if(vazia(pilha)==1){
-        printf("A pilha esta vazia");
+        printf("A pilha esta vazia:\n");
     }else{
         node *aux = pilha.prox;
         printf("Elementos da Pilha:\n");
@@ -66,27 +65,6 @@ void imprimir(node pilha){
         }
         printf("\n");
     }
-}
-
-void inverte(node pilha){
-    node pilhaAux1;
-    criaPilha(&pilhaAux1);
-
-    if(vazia(pilha)==1){
-        printf("A pilha esta vazia 1\n");
-    }else{
-        node *aux = pilha.prox;
-        while(aux != NULL){
-            int invertido = pop(&pilha);
-            push(&pilhaAux1, invertido);
-            aux = aux->prox;
-        }
-    }
-    printf("\n pilha\n");
-    imprimir(pilha);
-
-    printf("\n pilhaAux1\n");
-    imprimir(pilhaAux1);
 }
 
 void zerar(node *pilha){
@@ -107,8 +85,10 @@ int main()
 {
 
     node pilha;
+    node pilhaAux;
 
     criaPilha(&pilha);
+    criaPilha(&pilhaAux);
 
     push(&pilha, 1);
     push(&pilha, 2);
@@ -117,18 +97,23 @@ int main()
     push(&pilha, 5);
     push(&pilha, 6);
     push(&pilha, 7);
-    imprimir(pilha);
-
-    inverte(pilha);
-
-    node *retirado = pop(&pilha);
-
-    printf("Elemento retirado: %d\n\n", retirado->id);
-
-    zerar(&pilha);
 
     imprimir(pilha);
 
+    ///  inverte pilha /////////////////////////
+    int retirado;
+    node *aux = pilha.prox;
+
+    while(pilha.prox != NULL){
+        retirado = pop(&pilha);
+        push(&pilhaAux, retirado);
+    }
+
+    pilha = pilhaAux;
+    /// /////////////////////////////////////
+    imprimir(pilha);
+
+    zerar(&pilhaAux);
 
     return 0;
 }

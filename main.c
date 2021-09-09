@@ -107,8 +107,10 @@ int main()
 {
 
     node pilha;
+    node pilhaAux;
 
     criaPilha(&pilha);
+    criaPilha(&pilhaAux);
 
     push(&pilha, 1);
     push(&pilha, 2);
@@ -117,18 +119,22 @@ int main()
     push(&pilha, 5);
     push(&pilha, 6);
     push(&pilha, 7);
-    imprimir(pilha);
-
-    inverte(pilha);
-
-    node *retirado = pop(&pilha);
-
-    printf("Elemento retirado: %d\n\n", retirado->id);
-
-    zerar(&pilha);
 
     imprimir(pilha);
 
+    ///  inverte pilha /////////////////////////
+    int retirado;
+
+    while(pilha.prox != NULL){
+        retirado = pop(&pilha);
+        push(&pilhaAux, retirado);
+    }
+
+    pilha = pilhaAux;
+    /// /////////////////////////////////////
+    imprimir(pilha);
+
+    zerar(&pilhaAux);
 
     return 0;
 }
